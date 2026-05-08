@@ -1,0 +1,51 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.deliverymap'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.deliverymap"
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+}
+
+dependencies {
+    // MapLibre — mappa open source (no Google Maps)
+    implementation 'org.maplibre.gl:android-sdk:10.2.0'
+    // Plugin annotazioni (marker, simboli)
+    implementation 'org.maplibre.gl:android-plugin-annotation-v9:1.0.0'
+
+    // HTTP client + JSON
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+    implementation 'com.google.code.gson:gson:2.10.1'
+
+    // Posizione GPS
+    implementation 'com.google.android.gms:play-services-location:21.2.0'
+
+    // UI Material 3
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'androidx.coordinatorlayout:coordinatorlayout:1.2.0'
+}

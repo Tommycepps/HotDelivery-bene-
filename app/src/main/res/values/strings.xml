@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DeliveryMap</string>
+    <string name="login_titolo">Accedi</string>
+    <string name="registrazione_titolo">Crea account</string>
+    <string name="empty_state">Nessun delivery attivo nella tua zona</string>
+    <string name="posizione_aggiornata">Posizione aggiornata</string>
+    <string name="errore_rete">Errore di rete. Riprova.</string>
+</resources>

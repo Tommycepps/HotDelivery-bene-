@@ -1,0 +1,33 @@
+package com.deliverymap.utils;
+
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+/**
+ * Utility per l'hashing delle password con SHA-256.
+ * Non richiede librerie esterne.
+ */
+public class HashUtils {
+
+    /**
+     * Calcola l'hash SHA-256 della stringa fornita.
+     * @param input La stringa da hashare (es. password in chiaro)
+     * @return Hash esadecimale a 64 caratteri
+     */
+    public static String sha256(String input) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(input.getBytes(StandardCharsets.UTF_8));
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("SHA-256 non disponibile", e);
+        }
+    }
+}

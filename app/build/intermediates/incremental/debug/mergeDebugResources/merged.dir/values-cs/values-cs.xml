@@ -72,7 +72,7 @@
     <string name="icon_content_description">Ikona dialogového okna</string>
     <string name="item_view_role_description">Karta</string>
     <string name="maplibre_attributionErrorNoBrowser">Na zařízení není nainstalován webový prohlížeč, webovou stránku nelze zobrazit.</string>
-    <string name="maplibre_attributionsDialogTitle">MapLibre Maps SDK pro Android</string>
+    <string name="maplibre_attributionsDialogTitle">MapLibre Android</string>
     <string name="maplibre_attributionsIconContentDescription">Atributy. Zobrazit nastavení atributů.</string>
     <string name="maplibre_compassContentDescription">Kompas. Nastavit natočení mapy k severu.</string>
     <string name="maplibre_mapActionDescription">Zobrazení mapy vytvořené s MapLibre. Posunout tažením dvěma prsty. Změnit velikost roztažením dvou prstů.</string>

@@ -69,7 +69,7 @@
     <string name="exposed_dropdown_menu_content_description">Dropdownmenu tonen</string>
     <string name="icon_content_description">Icoon voor dialoogvenster</string>
     <string name="item_view_role_description">Tabblad</string>
-    <string name="maplibre_attributionsDialogTitle">MapLibre Android SDK</string>
+    <string name="maplibre_attributionsDialogTitle">MapLibre Android</string>
     <string name="maplibre_attributionsIconContentDescription">Attributie icoon. Activeer voor het tonen van het attributie dialoog. </string>
     <string name="maplibre_compassContentDescription">Kompas van de map. Activeer om de map rotatie te herzetten naar het noorden.</string>
     <string name="maplibre_mapActionDescription">Toont een map gemaakt met MapLibre. Scroll door het slepen met twee vingers. Zoom door vingers te nijpen.</string>

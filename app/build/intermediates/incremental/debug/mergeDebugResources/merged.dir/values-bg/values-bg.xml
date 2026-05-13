@@ -69,7 +69,7 @@
     <string name="exposed_dropdown_menu_content_description">Показване на падащото меню</string>
     <string name="icon_content_description">Икона за диалогов прозорец</string>
     <string name="item_view_role_description">Раздел</string>
-    <string name="maplibre_attributionsDialogTitle">MapLibre Android SDK</string>
+    <string name="maplibre_attributionsDialogTitle">MapLibre Android</string>
     <string name="maplibre_attributionsIconContentDescription">Иконка функции. Активирай, за да покажеш диалог функции.</string>
     <string name="maplibre_compassContentDescription">Компас на картата. Активирай, за да насочиш картата на север.</string>
     <string name="maplibre_mapActionDescription">Показва карта създадена с MapLibre. Скролни с два пръста. Мащабирай с два пръста.</string>

@@ -70,7 +70,7 @@
     <string name="icon_content_description">Ícone de caixa de diálogo</string>
     <string name="item_view_role_description">Separador</string>
     <string name="maplibre_attributionErrorNoBrowser">Não está nenhum navegador de Internet instalado no dispositivo. Não é possível abrir a página web.</string>
-    <string name="maplibre_attributionsDialogTitle">Mapas MapLibre SDK para Android</string>
+    <string name="maplibre_attributionsDialogTitle">MapLibre Android</string>
     <string name="maplibre_attributionsIconContentDescription">Ícone de atribuição. Ativar para mostrar a janela de atribuição.</string>
     <string name="maplibre_compassContentDescription">Compasso do mapa. Ativar para virar o mapa para Norte.</string>
     <string name="maplibre_mapActionDescription">A mostrar um Mapa criado com MapLibre. Desloque arrastanto com 2 dedos. Zoom afastando ou aproximando os 2 dedos.</string>

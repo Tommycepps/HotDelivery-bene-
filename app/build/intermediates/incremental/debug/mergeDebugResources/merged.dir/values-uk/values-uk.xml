@@ -72,7 +72,7 @@
     <string name="icon_content_description">Значок вікна</string>
     <string name="item_view_role_description">Вкладка</string>
     <string name="maplibre_attributionErrorNoBrowser">Веб-оглядач відсутній на цьому пристрої, неможливо відкрити веб-сторінку</string>
-    <string name="maplibre_attributionsDialogTitle">MapLibre Maps SDK для Android</string>
+    <string name="maplibre_attributionsDialogTitle">MapLibre Android</string>
     <string name="maplibre_attributionsIconContentDescription">Значок атрибуції. Натисніть, щоб показати діалог атрибуції.</string>
     <string name="maplibre_compassContentDescription">Компас. Натисніть щоб зорієнтувати мапу на північ.</string>
     <string name="maplibre_mapActionDescription">Показує мапи створені за допомоги MapLibre. Пересувайте мапу двома пальцями. Змінюйте масштаб стуляючи/розводячи два пальці.</string>

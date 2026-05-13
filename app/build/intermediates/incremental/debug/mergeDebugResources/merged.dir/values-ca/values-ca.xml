@@ -69,7 +69,7 @@
     <string name="exposed_dropdown_menu_content_description">Mostra el menú desplegable</string>
     <string name="icon_content_description">Icona del quadre de diàleg</string>
     <string name="item_view_role_description">Tabulador</string>
-    <string name="maplibre_attributionsDialogTitle">MapLibre Android SDK</string>
+    <string name="maplibre_attributionsDialogTitle">MapLibre Android</string>
     <string name="maplibre_attributionsIconContentDescription">Icona d’atribució. Activa per mostrar el diàleg de l’atribució.</string>
     <string name="maplibre_compassContentDescription">Brúixola del mapa. Activa per restablir la rotació del mapa al Nord.</string>
     <string name="maplibre_mapActionDescription">Mostrant un mapa creat amb MapLibre. Desplaça’t arrossegant amb dos dits. Fes zoom pessigant amb dos dits.</string>

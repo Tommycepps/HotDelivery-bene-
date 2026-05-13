@@ -8,8 +8,8 @@ package com.deliverymap.utils;
 public class Constants {
 
     // ─── Supabase ───────────────────────────────────────────────────────────
-    public static final String SUPABASE_URL      = "https://<PROJECT_ID>.supabase.co";
-    public static final String SUPABASE_ANON_KEY = "<ANON_KEY>";
+    public static final String SUPABASE_URL      = "https://qjeoppuibcwflmawgfvk.supabase.co";
+    public static final String SUPABASE_ANON_KEY = "<eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFqZW9wcHVpYmN3ZmxtYXdnZnZrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2MzczMTQsImV4cCI6MjA5NDIxMzMxNH0.AGIgN3-KhpvtWfBDCIzY-p7R1N6zNXebOzIzXil41xs>";
 
     // ─── Polling ────────────────────────────────────────────────────────────
     /** Intervallo di aggiornamento posizione in millisecondi (30 secondi). */

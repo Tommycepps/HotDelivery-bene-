@@ -39,15 +39,15 @@ android {
 
 dependencies {
     // -------------------------------------------------------
-    // MapLibre Android SDK 10.x
+    // MapLibre Android SDK 11.8.2 (versione reale su Maven Central)
     // Namespace classi: org.maplibre.android
+    // Le versioni 10.x NON esistono su Maven Central
     // -------------------------------------------------------
-    implementation 'org.maplibre.gl:android-sdk:10.2.0'
+    implementation 'org.maplibre.gl:android-sdk:11.8.2'
 
-    // Plugin annotazioni v2.0.0: primo rilascio con namespace org.maplibre.android
-    // (v1.0.0 usava ancora com.mapbox.mapboxsdk -> NON usare)
-    // v2.0.0 e' compatibile con android-sdk:10.x
-    implementation 'org.maplibre.gl:android-plugin-annotation-v9:2.0.0'
+    // Plugin annotazioni 3.0.1 compatibile con SDK 11.x
+    // Namespace: org.maplibre.android.plugins.annotation
+    implementation 'org.maplibre.gl:android-plugin-annotation-v9:3.0.1'
 
     // HTTP client + JSON
     implementation 'com.squareup.okhttp3:okhttp:4.12.0'

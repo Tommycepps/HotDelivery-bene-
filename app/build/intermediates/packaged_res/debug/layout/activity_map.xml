@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Mappa MapLibre a schermo intero -->
+    <org.maplibre.android.maps.MapView
+        android:id="@+id/map_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- Toolbar in alto con nome utente e logout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/surface_overlay"
+        android:padding="12dp"
+        android:gravity="center_vertical"
+        app:layout_anchor="@id/map_view"
+        app:layout_anchorGravity="top">
+
+        <TextView
+            android:id="@+id/tv_nome_utente"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:text="Nome · ruolo" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="Esci"
+            android:textSize="12sp"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:strokeColor="@android:color/white"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+    <!-- Messaggio empty state quando non ci sono delivery -->
+    <TextView
+        android:id="@+id/tv_empty_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Nessun delivery attivo nella tua zona"
+        android:textSize="16sp"
+        android:textColor="@android:color/white"
+        android:background="@color/surface_overlay"
+        android:padding="12dp"
+        android:visibility="gone" />
+
+    <!-- Bottoni azione in basso -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="72dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_disponibile"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Sono Disponibile"
+            android:visibility="gone"
+            style="@style/Widget.MaterialComponents.Button"
+            app:backgroundTint="#FF6F00" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_pausa"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="In Pausa"
+            android:visibility="gone"
+            style="@style/Widget.MaterialComponents.Button"
+            app:backgroundTint="#757575" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_aggiorna"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Aggiorna"
+            android:visibility="gone"
+            style="@style/Widget.MaterialComponents.Button"
+            app:backgroundTint="#0288D1" />
+    </LinearLayout>
+
+    <!-- FAB per centrare la mappa sulla posizione attuale -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_centra_mappa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@android:drawable/ic_menu_mylocation"
+        app:backgroundTint="@android:color/white"
+        app:tint="#333333" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

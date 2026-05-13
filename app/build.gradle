@@ -40,13 +40,14 @@ android {
 dependencies {
     // -------------------------------------------------------
     // MapLibre Android SDK 10.x
-    // Package: org.maplibre.gl  →  classi in org.maplibre.android
+    // Namespace classi: org.maplibre.android
     // -------------------------------------------------------
     implementation 'org.maplibre.gl:android-sdk:10.2.0'
 
-    // Plugin annotazioni (SymbolManager, SymbolOptions, Symbol)
-    // Stesso gruppo org.maplibre.gl → namespace org.maplibre.android.plugins.annotation
-    implementation 'org.maplibre.gl:android-plugin-annotation-v9:1.0.0'
+    // Plugin annotazioni v2.0.0: primo rilascio con namespace org.maplibre.android
+    // (v1.0.0 usava ancora com.mapbox.mapboxsdk -> NON usare)
+    // v2.0.0 e' compatibile con android-sdk:10.x
+    implementation 'org.maplibre.gl:android-plugin-annotation-v9:2.0.0'
 
     // HTTP client + JSON
     implementation 'com.squareup.okhttp3:okhttp:4.12.0'

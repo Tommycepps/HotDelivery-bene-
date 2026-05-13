@@ -3,15 +3,34 @@
     android:height="48dp"
     android:viewportWidth="48"
     android:viewportHeight="48">
-    <path android:fillColor="#0288D1"
-          android:pathData="M8,28 Q10,22 16,22 L28,20 Q34,20 36,26 L40,26 Q42,26 42,28 L42,32 Q42,34 40,34 L36,34 Q35,37 32,37 Q29,37 28,34 L18,34 Q17,37 14,37 Q11,37 10,34 L8,34 Z"/>
-    <circle android:fillColor="#333333" android:strokeColor="#555" android:strokeWidth="1"
-            android:cx="14" android:cy="35" android:r="3.5"/>
-    <circle android:fillColor="#333333" android:strokeColor="#555" android:strokeWidth="1"
-            android:cx="32" android:cy="35" android:r="3.5"/>
-    <path android:fillColor="#0288D1"
-          android:pathData="M34,22 L38,18 L40,20 L36,24 Z"/>
-    <rect android:fillColor="#FF6F00"
-          android:left="18" android:top="14" android:right="30" android:bottom="23"
-          android:rx="2"/>
+
+    <!-- Corpo dello scooter -->
+    <path
+        android:fillColor="#0288D1"
+        android:pathData="M8,28 Q10,22 16,22 L28,20 Q34,20 36,26 L40,26 Q42,26 42,28 L42,32 Q42,34 40,34 L36,34 Q35,37 32,37 Q29,37 28,34 L18,34 Q17,37 14,37 Q11,37 10,34 L8,34 Z" />
+
+    <!-- Ruota posteriore (cerchio convertito in path) -->
+    <path
+        android:fillColor="#333333"
+        android:strokeColor="#555555"
+        android:strokeWidth="1"
+        android:pathData="M14,31.5 C15.9,31.5 17.5,33.1 17.5,35 C17.5,36.9 15.9,38.5 14,38.5 C12.1,38.5 10.5,36.9 10.5,35 C10.5,33.1 12.1,31.5 14,31.5 Z" />
+
+    <!-- Ruota anteriore (cerchio convertito in path) -->
+    <path
+        android:fillColor="#333333"
+        android:strokeColor="#555555"
+        android:strokeWidth="1"
+        android:pathData="M32,31.5 C33.9,31.5 35.5,33.1 35.5,35 C35.5,36.9 33.9,38.5 32,38.5 C30.1,38.5 28.5,36.9 28.5,35 C28.5,33.1 30.1,31.5 32,31.5 Z" />
+
+    <!-- Parabrezza / manubrio -->
+    <path
+        android:fillColor="#0288D1"
+        android:pathData="M34,22 L38,18 L40,20 L36,24 Z" />
+
+    <!-- Box di consegna arancione (rettangolo con angoli arrotondati convertito in path) -->
+    <path
+        android:fillColor="#FF6F00"
+        android:pathData="M20,14 L28,14 Q30,14 30,16 L30,23 Q30,25 28,25 L20,25 Q18,25 18,23 L18,16 Q18,14 20,14 Z" />
+
 </vector>

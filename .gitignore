@@ -1,0 +1,21 @@
+# Android / Gradle generated
+*.iml
+.gradle/
+build/
+app/build/
+
+# Local configuration
+local.properties
+
+# IntelliJ / Android Studio
+.idea/
+*.iws
+*.ipr
+
+# Keystore files — MAI committare
+*.jks
+*.keystore
+
+# OS files
+.DS_Store
+Thumbs.db

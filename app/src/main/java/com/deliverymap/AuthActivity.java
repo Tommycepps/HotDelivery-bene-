@@ -18,10 +18,6 @@ import com.deliverymap.utils.HashUtils;
 import com.deliverymap.utils.SessionManager;
 import com.google.android.material.snackbar.Snackbar;
 
-/**
- * Schermata di login e registrazione.
- * Gestisce l'autenticazione tramite Supabase REST API.
- */
 public class AuthActivity extends AppCompatActivity {
 
     private EditText etEmail, etPassword;
@@ -47,7 +43,6 @@ public class AuthActivity extends AppCompatActivity {
     // LOGIN
     // ─────────────────────────────────────────────────────────────────────────────
 
-    /** Verifica le credenziali su Supabase e avvia la sessione. */
     private void tentaLogin() {
         String email    = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
@@ -57,24 +52,28 @@ public class AuthActivity extends AppCompatActivity {
             return;
         }
 
+        // Validazione formato email lato client (evita chiamate inutili)
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            mostraSnackbar("Formato email non valido");
+            return;
+        }
+
         String passwordHash = HashUtils.sha256(password);
         mostraLoading(true);
 
-        // Chiamata di rete in background — mai bloccare il thread UI
         new Thread(() -> {
             try {
                 User user = SupabaseClient.getInstance().getUserByEmail(email);
                 runOnUiThread(() -> {
                     mostraLoading(false);
                     if (user == null) {
-                        mostraSnackbar("Email non trovata");
+                        mostraSnackbar("Nessun account trovato con questa email");
                         return;
                     }
                     if (!user.password_hash.equals(passwordHash)) {
                         mostraSnackbar("Password errata");
                         return;
                     }
-                    // Login riuscito: salva la sessione e vai alla mappa
                     SessionManager.getInstance().login(user.id, user.nome, user.ruolo);
                     startActivity(new Intent(AuthActivity.this, MapActivity.class));
                     finish();
@@ -82,7 +81,7 @@ public class AuthActivity extends AppCompatActivity {
             } catch (Exception e) {
                 runOnUiThread(() -> {
                     mostraLoading(false);
-                    mostraSnackbar("Errore di rete: " + e.getMessage());
+                    mostraSnackbar("Errore di connessione: controlla la rete");
                 });
             }
         }).start();
@@ -92,7 +91,6 @@ public class AuthActivity extends AppCompatActivity {
     // REGISTRAZIONE
     // ─────────────────────────────────────────────────────────────────────────────
 
-    /** Mostra un dialog per creare un nuovo account con scelta del ruolo. */
     private void mostraDialogRegistrazione() {
         View dialogView = LayoutInflater.from(this)
                 .inflate(R.layout.dialog_registrazione, null);
@@ -105,14 +103,22 @@ public class AuthActivity extends AppCompatActivity {
                 .setTitle("Crea account")
                 .setView(dialogView)
                 .setPositiveButton("Registrati", (dialog, which) -> {
-                    String nome  = etNome.getText().toString().trim();
-                    String email = etEmailR.getText().toString().trim();
-                    String pass  = etPassR.getText().toString().trim();
-                    int checkedId = rgRuolo.getCheckedRadioButtonId();
-                    String ruolo = (checkedId == R.id.rb_cuoco) ? "cuoco" : "cliente";
+                    String nome     = etNome.getText().toString().trim();
+                    String email    = etEmailR.getText().toString().trim();
+                    String pass     = etPassR.getText().toString().trim();
+                    int checkedId   = rgRuolo.getCheckedRadioButtonId();
+                    String ruolo    = (checkedId == R.id.rb_cuoco) ? "cuoco" : "cliente";
 
                     if (nome.isEmpty() || email.isEmpty() || pass.isEmpty()) {
                         mostraSnackbar("Compila tutti i campi");
+                        return;
+                    }
+                    if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                        mostraSnackbar("Formato email non valido");
+                        return;
+                    }
+                    if (pass.length() < 6) {
+                        mostraSnackbar("La password deve essere di almeno 6 caratteri");
                         return;
                     }
                     registraUtente(nome, email, pass, ruolo);
@@ -121,7 +127,6 @@ public class AuthActivity extends AppCompatActivity {
                 .show();
     }
 
-    /** Invia i dati del nuovo utente a Supabase. */
     private void registraUtente(String nome, String email, String password, String ruolo) {
         String passwordHash = HashUtils.sha256(password);
         User nuovoUtente = new User(nome, email, passwordHash, ruolo);
@@ -133,7 +138,7 @@ public class AuthActivity extends AppCompatActivity {
                 runOnUiThread(() -> {
                     mostraLoading(false);
                     if (creato == null) {
-                        mostraSnackbar("Registrazione fallita (email già in uso?)");
+                        mostraSnackbar("Registrazione fallita");
                         return;
                     }
                     SessionManager.getInstance().login(creato.id, creato.nome, creato.ruolo);
@@ -143,13 +148,13 @@ public class AuthActivity extends AppCompatActivity {
             } catch (Exception e) {
                 runOnUiThread(() -> {
                     mostraLoading(false);
-                    mostraSnackbar("Errore: " + e.getMessage());
+                    String msg = e.getMessage() != null ? e.getMessage() : "Errore di connessione";
+                    mostraSnackbar(msg);
                 });
             }
         }).start();
     }
 
-    // Helper UI
     private void mostraLoading(boolean show) {
         progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
         btnAccedi.setEnabled(!show);

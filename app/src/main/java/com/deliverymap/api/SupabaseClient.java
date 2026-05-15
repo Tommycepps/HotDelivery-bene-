@@ -1,5 +1,7 @@
 package com.deliverymap.api;
 
+import android.util.Log;
+
 import com.deliverymap.models.Delivery;
 import com.deliverymap.models.User;
 import com.deliverymap.utils.Constants;
@@ -7,7 +9,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +27,7 @@ import okhttp3.Response;
  */
 public class SupabaseClient {
 
+    private static final String TAG = "SupabaseClient";
     private static SupabaseClient instance;
     private final OkHttpClient http;
     private final Gson gson;
@@ -33,7 +38,6 @@ public class SupabaseClient {
         this.gson = new Gson();
     }
 
-    /** Restituisce l'istanza singleton. */
     public static SupabaseClient getInstance() {
         if (instance == null) {
             instance = new SupabaseClient();
@@ -54,18 +58,42 @@ public class SupabaseClient {
                 .addHeader("Prefer", "return=representation");
     }
 
+    /**
+     * Encoda una stringa per l'uso sicuro in un URL query parameter.
+     * Converte '@' -> '%40', '+' -> '%20', ecc.
+     */
+    private String encodeParam(String value) {
+        try {
+            return URLEncoder.encode(value, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            // UTF-8 è sempre supportato su Android — non accade mai
+            return value;
+        }
+    }
+
     // ─────────────────────────────────────────────────────────────────────────────
     // USERS
     // ─────────────────────────────────────────────────────────────────────────────
 
     /**
-     * Cerca un utente per email. Restituisce null se non trovato.
+     * Cerca un utente per email.
+     * IMPORTANTE: la email DEVE essere URL-encoded prima di inserirla nella query.
+     * Senza encoding, la '@' spezza l'URL e Supabase restituisce un errore 400.
+     *
+     * @return User se trovato, null altrimenti
+     * @throws IOException in caso di errore di rete o risposta HTTP non 2xx
      */
     public User getUserByEmail(String email) throws IOException {
-        Request request = baseRequest("users?email=eq." + email + "&select=*")
+        String emailEncoded = encodeParam(email);
+        Request request = baseRequest("users?email=eq." + emailEncoded + "&select=*")
                 .get().build();
         try (Response response = http.newCall(request).execute()) {
-            if (!response.isSuccessful() || response.body() == null) return null;
+            if (!response.isSuccessful()) {
+                String errorBody = response.body() != null ? response.body().string() : "(nessun body)";
+                Log.e(TAG, "getUserByEmail HTTP " + response.code() + ": " + errorBody);
+                throw new IOException("Errore server (" + response.code() + "): " + errorBody);
+            }
+            if (response.body() == null) return null;
             String body = response.body().string();
             Type listType = new TypeToken<List<User>>() {}.getType();
             List<User> users = gson.fromJson(body, listType);
@@ -75,13 +103,24 @@ public class SupabaseClient {
 
     /**
      * Registra un nuovo utente. Restituisce l'utente con id assegnato da Supabase.
+     *
+     * @throws IOException se la richiesta fallisce o l'email è già in uso
      */
     public User createUser(User user) throws IOException {
         String json = gson.toJson(user);
         RequestBody body = RequestBody.create(json, JSON);
         Request request = baseRequest("users").post(body).build();
         try (Response response = http.newCall(request).execute()) {
-            if (!response.isSuccessful() || response.body() == null) return null;
+            if (!response.isSuccessful()) {
+                String errorBody = response.body() != null ? response.body().string() : "(nessun body)";
+                Log.e(TAG, "createUser HTTP " + response.code() + ": " + errorBody);
+                // 409 Conflict = email già registrata
+                if (response.code() == 409) {
+                    throw new IOException("Email già registrata");
+                }
+                throw new IOException("Errore registrazione (" + response.code() + ")");
+            }
+            if (response.body() == null) return null;
             String responseBody = response.body().string();
             Type listType = new TypeToken<List<User>>() {}.getType();
             List<User> users = gson.fromJson(responseBody, listType);
@@ -93,9 +132,6 @@ public class SupabaseClient {
     // DELIVERIES
     // ─────────────────────────────────────────────────────────────────────────────
 
-    /**
-     * Recupera tutti i delivery con attivo = true.
-     */
     public List<Delivery> getDeliveryAttivi() throws IOException {
         Request request = baseRequest("deliveries?attivo=eq.true&select=*")
                 .get().build();
@@ -108,9 +144,6 @@ public class SupabaseClient {
         }
     }
 
-    /**
-     * Cerca il delivery esistente di un cuoco (per UUID).
-     */
     public Delivery getDeliveryByCuoco(String cuocoId) throws IOException {
         Request request = baseRequest("deliveries?cuoco_id=eq." + cuocoId + "&select=*")
                 .get().build();
@@ -123,9 +156,6 @@ public class SupabaseClient {
         }
     }
 
-    /**
-     * Crea un nuovo delivery per il cuoco.
-     */
     public Delivery createDelivery(Delivery delivery) throws IOException {
         String json = gson.toJson(delivery);
         RequestBody body = RequestBody.create(json, JSON);
@@ -139,10 +169,6 @@ public class SupabaseClient {
         }
     }
 
-    /**
-     * Aggiorna la posizione e lo stato attivo del delivery del cuoco.
-     * Usa PATCH per aggiornare solo i campi necessari.
-     */
     public boolean updateDeliveryPosizione(String cuocoId, double lat, double lng, boolean attivo)
             throws IOException {
         String json = String.format(
@@ -157,9 +183,6 @@ public class SupabaseClient {
         }
     }
 
-    /**
-     * Imposta il delivery del cuoco come inattivo (pausa).
-     */
     public boolean setDeliveryInattivo(String cuocoId) throws IOException {
         String json = "{\"attivo\": false}";
         RequestBody body = RequestBody.create(json, JSON);
